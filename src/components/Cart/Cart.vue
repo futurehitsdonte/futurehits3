@@ -1,13 +1,13 @@
 <template>
     <div>
-        <p>This is the cart view</p>
-        <cartItem :cartObj="this.cartItems"></cartitem>
+        <cartItem :cartObj="this.cartItemData"></cartitem>
     </div>
 </template>
 
 <script>
     import moltin from '@/moltinConfig'
     import cartItem from '@/components/Cart/CartItem/CartItem.vue'
+    import { mapState } from 'vuex'
     export default {
         name: 'Cart',
         components: {
@@ -15,16 +15,22 @@
         },
         data(){
             return{
-                cartItems : null
+                cartItemData : null
             }
         },
         created(){
+            this.$store.dispatch('getCartItems')
             moltin
                 .Cart()
                 .Items()
                 .then( cart => {
-                    return this.cartItems = cart;
+                    return this.cartItemData = cart;
                 })
+        },
+        computed: {
+            ...mapState([
+                'cartItems'
+            ])
         }
     }
 </script>

@@ -1,21 +1,18 @@
 <template>
     <div>
         <ul class="productUL">
-            <code>
-                {{productsCardMeta}}
-            </code>
             <li v-for="(product, key) in productsCardMeta" :key="key" class="productCard" @click="goToProduct(product.id)">
                 <p>{{ product.name }}</p>
                 <img :src="productsCardImage[key].link.href" />
-                <!-- <input type="number" min="1" max="5" v-model="productQuantity"> <br>
-                <button @click="addProductToCart(product)">Add to cart</button> -->
             </li>
         </ul>
+        <div v-if="loading">
+            {{productsCardMeta}}
+        </div>
     </div>
 </template>
 
 <script>
-    import moltin from '../../../moltinConfig'
     import { mapState } from 'vuex'
     export default {
         name : "ProductCard",
@@ -32,14 +29,19 @@
             }
         },
         created(){
-            this.$store.dispatch('getProductData')
-            this.$store.dispatch('getCartItems')
+            setTimeout(()=> {
+                this.$store.dispatch('getProductData')
+                this.$store.dispatch('getCartItems')
+                console.log(this.loading)
+            }, 2000)
+            
         },
         computed: {
             ...mapState([
                 'productsCardMeta',
                 'productsCardImage',
-                'cartItems'
+                'cartItems',
+                'loading'
             ])
         }
     }
@@ -61,6 +63,7 @@
     .productCard > img{
         display: block;
         margin: 0 auto;
+        width: 41%;
     }
     input[type="number"]{
         width: 40%;

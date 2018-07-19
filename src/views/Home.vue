@@ -7,7 +7,7 @@
 <script>
 // @ is an alias to /src
 import ProductCard from '@/components/Products/Card/ProductCard'
-
+import {mapState} from 'vuex'
 export default {
   name: 'home',
   components: {
@@ -15,3 +15,8 @@ export default {
   }
 }
 </script>
+
+<style >
+
+</style>
+

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import moltin from './moltinConfig'
 import {eventBus} from './main'
-import router from './router'
 Vue.use(Vuex)
 
 
@@ -13,14 +12,21 @@ export default new Vuex.Store({
     productsCardImage: null,
     cartItems: null,
     singleProduct: null,
-    singleProductIncluded: null
+    singleProductIncluded: null,
+    loading: false
   },
   getters :{
     getProductRouteID : state => {
       return state.productID
+    },
+    getLoadingState : state => {
+      return state.loading
     }
   },
   mutations: {
+    IS_VIEW_LOADING: (state, payload) =>{
+      state.loading = payload
+    },
     GET_CART_LENGTH: (state, payload) =>{
       state.cartLength = payload
     },
@@ -42,11 +48,12 @@ export default new Vuex.Store({
   },
   actions: {
     getProductData ({commit}){
-      console.log(router)
+      commit('IS_VIEW_LOADING', true)
       moltin.Products
         .With('main_image')
         .All()
         .then( products => {
+            commit('IS_VIEW_LOADING', false)
             commit('GET_PRODUCT_CARDS_META', products.data)
             commit('GET_PRODUCT_CARDS_IMAGE', products.included.main_images)
         })
@@ -64,12 +71,14 @@ export default new Vuex.Store({
         })
     },
     getSingleProduct ({commit}, payload){
+      commit('IS_VIEW_LOADING', true)
       moltin
             .Products
             .With(['main_image', 'files'])
             .Get(payload)
             .then(product => {
                 console.log(product)
+                commit('IS_VIEW_LOADING', false)
                 commit('GET_SINGLE_PRODUCT_INCLUDED', product.included)
                 commit('GET_SINGLE_PRODUCT', product.data)
             })
