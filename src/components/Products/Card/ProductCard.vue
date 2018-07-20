@@ -32,7 +32,6 @@
             setTimeout(()=> {
                 this.$store.dispatch('getProductData')
                 this.$store.dispatch('getCartItems')
-                console.log(this.loading)
             }, 2000)
             
         },

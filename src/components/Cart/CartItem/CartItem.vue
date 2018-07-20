@@ -60,5 +60,11 @@
 </script>
 
 <style scoped>
-
+    ul{
+        list-style: none
+    }
+    li{
+        float: left;
+        width: 50%;
+    }
 </style>

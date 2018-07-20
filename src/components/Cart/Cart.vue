@@ -1,6 +1,7 @@
 <template>
     <div>
         <cartItem :cartObj="this.cartItemData"></cartitem>
+        <v-btn href="#/checkout">Go to Checkout</v-btn>
     </div>
 </template>
 

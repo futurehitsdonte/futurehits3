@@ -77,7 +77,6 @@ export default new Vuex.Store({
             .With(['main_image', 'files'])
             .Get(payload)
             .then(product => {
-                console.log(product)
                 commit('IS_VIEW_LOADING', false)
                 commit('GET_SINGLE_PRODUCT_INCLUDED', product.included)
                 commit('GET_SINGLE_PRODUCT', product.data)

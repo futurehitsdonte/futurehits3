@@ -1,6 +1,5 @@
 <template>
   <v-app id="app">
-    
     <div>
       <NavBar />
       <v-content>

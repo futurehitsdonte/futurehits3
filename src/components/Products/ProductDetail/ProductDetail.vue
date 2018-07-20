@@ -5,7 +5,22 @@
             :items="itemQuantity"
             v-model="itemsModel"></v-select>
         <v-btn color="success" @click="addProductToCart(singleProduct.id)"> Add to Cart</v-btn>
-        <SnackBar :textSnackbar='snackBarText' :showSnackBar='showSnackBarBoolean'/>
+        <!-- <SnackBar :textSnackbar='snackBarText' :showSnackBar='showSnackBarBoolean'/> -->
+        <v-snackbar 
+            v-model="snackVModel" 
+            :bottom="y"
+            :right="x"
+            :multi-line="mode === 'multi-line'" 
+            :timeout="timeout"
+            color="green"> 
+            {{text}}
+            <v-btn
+                dark
+                @click="snackVModel = false"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
     </div>
 </template>
 
@@ -26,8 +41,14 @@
                 itemQuantity: [
                     1,2,3,4,5,6,7,8,9,10
                 ],
-                snackBarText: 'hello my friends',
-                showSnackBarBoolean: true
+                snackBarText: 'Change this',
+                snackVModel: false,
+                snackbar: false,
+                y: 'bottom',
+                x: 'right',
+                mode: 'multi-line',
+                timeout: 4000,
+                text: 'Hello, I\'m a snackbar'
             }
         },
         created(){
@@ -48,6 +69,8 @@
                 moltin.Cart()
                     .AddProduct(item, this.itemsModel)
                     .then( (products) => {
+                        this.snackVModel = true
+                        this.text = this.singleProduct.name + ' has been added to cart!';
                         this.$store.dispatch('getCartItems')
                     })
             }

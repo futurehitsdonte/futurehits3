@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-snackbar 
-            v-model="snackVModel" 
+            v-model="showSnackBarComputed" 
             :bottom="yAxisSnackbar === 'bottom'" 
             :top="yAxisSnackbar === 'top'"
             :right="xAxisSnackbar === 'right'"
@@ -62,12 +62,11 @@
             }
         },
         created(){
-            this.snackVModel = this.showSnackBar
+            
         },
         computed: {
             showSnackBarComputed(){
-                // this.snackVModel = ! this.snackVModel;
-                console.log(showSnackBar)
+                this.snackVModel = this.showSnackBar
             }
         }
     }
