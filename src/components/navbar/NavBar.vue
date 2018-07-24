@@ -22,9 +22,8 @@
                     <span slot="badge">{{cartLength || 0}}</span>
 
                     <v-avatar
-                        color="green darken4"
                     >
-                        <v-icon color="white">shopping_cart</v-icon>
+                        <v-icon>shopping_cart</v-icon>
                     </v-avatar>
                     </v-badge>
                 </v-btn>

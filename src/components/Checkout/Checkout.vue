@@ -39,8 +39,6 @@
                             </v-flex>
                         </v-layout>
                     </v-container>
-                    
-                    
                 </v-form>
             </v-card>
             <v-btn color="primary" @click="e6 = 2" :disabled="!step1Form">Continue</v-btn>

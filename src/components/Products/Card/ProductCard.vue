@@ -6,9 +6,6 @@
                 <img :src="productsCardImage[key].link.href" />
             </li>
         </ul>
-        <div v-if="loading">
-            {{productsCardMeta}}
-        </div>
     </div>
 </template>
 

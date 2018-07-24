@@ -2,7 +2,7 @@
 <div>  
     <v-btn @click.stop="dialog = true" color="warning">Remove</v-btn>
     <v-layout row justify-center>
-        <v-dialog v-model="dialog" max-width="290">
+        <v-dialog v-model="dialog" max-width="450">
         
         <v-card>
             <v-card-title class="headline">Removimg {{itemName}} from your cart...</v-card-title>
@@ -21,7 +21,6 @@
 
 <script>
     import moltin from '@/moltinConfig'
-    import {eventBus} from '@/main'
     export default {
         name: "DeleteItemModal",
         data(){

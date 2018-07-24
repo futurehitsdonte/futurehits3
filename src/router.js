@@ -4,7 +4,6 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Cart from './components/Cart/Cart.vue'
 import ProductDetail from './components/Products/ProductDetail/ProductDetail.vue'
-import Products from './components/Products/Products.vue'
 import Checkout from '@/components/Checkout/Checkout.vue'
 
 Vue.use(Router)
@@ -27,12 +26,7 @@ export default new Router({
       component: Cart
     },
     {
-      path: '/products',
-      name: 'products',
-      component: Products
-    },
-    {
-      path: '/products/productDetail/:productID',
+      path: '/products/:productID',
       name: 'productDetail',
       component: ProductDetail
     },

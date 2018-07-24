@@ -1,21 +1,29 @@
 <template>
     <div>
-        <ul v-if="resetCart">
-            <li v-for="cart in resetCart.data" :key="cart.id">
-                <h3>{{cart.name}}</h3> 
-                <img :src="cart.image.href" :alt="cart.image.file_name">
-                <v-select v-model="cart.quantity" :items="itemQuantity"></v-select>
-                <DeleteItemModal :idOfItem="cart.id" :quantityOfItems="cart.quantity" :itemName="cart.name" @productItemsData="resetData($event)"/>
-            </li>
-        </ul>
-
         
+        <div v-if="resetCart">
+            <div v-if="resetCart.data.length > 0">
+                <ul>
+                    
+                    <li v-for="cart in resetCart.data" :key="cart.id">
+                        <h3>{{cart.name}}</h3> 
+                        <img :src="cart.image.href" :alt="cart.image.file_name">
+                        <v-text-field v-model="cart.quantity" type="number" :items="itemQuantity"></v-text-field>
+                        <DeleteItemModal :idOfItem="cart.id" :quantityOfItems="cart.quantity" :itemName="cart.name" @productItemsData="resetData($event)"/>
+                    </li>
+                </ul>
+                <v-btn href="#/checkout">Go to Checkout</v-btn>
+            </div>
+            
+            <div v-if="resetCart.data.length === 0">
+                <img src="../../../assets/future-hits-logo-green.png" alt="" id="imgNoData">
+                <h1>No items found</h1>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import moltin from '@/moltinConfig'
-    import { mapState } from 'vuex'
     import DeleteItemModal from '@/components/Cart/CartItem/modals/DeleteItemModal.vue'
     export default {
         name: "cartItem",
@@ -42,8 +50,9 @@
         },
         computed: {
             resetCart(){
+                console.log(this.cartData)
                 if(this.cartData){
-                    return this.cartData = []
+                    return this.cartData
                 }else{
                     return this.cartObj
                 }
@@ -66,5 +75,8 @@
     li{
         float: left;
         width: 50%;
+    }
+    #imgNoData{
+        width: 20%;
     }
 </style>

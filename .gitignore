@@ -1,5 +1,8 @@
 .DS_Store
 node_modules
+src/moltinConfig.js
+src/firebaseConfig.js
+src/firebaseInit.js
 /dist
 
 # local env files

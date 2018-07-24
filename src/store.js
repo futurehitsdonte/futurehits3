@@ -13,7 +13,7 @@ export default new Vuex.Store({
     cartItems: null,
     singleProduct: null,
     singleProductIncluded: null,
-    loading: false
+    loading: true
   },
   getters :{
     getProductRouteID : state => {
@@ -59,6 +59,7 @@ export default new Vuex.Store({
         })
     },
     getCartItems ({commit}){
+      commit('IS_VIEW_LOADING', true)
       moltin.Cart()
         .Items()
         .then(cart => {
@@ -66,6 +67,7 @@ export default new Vuex.Store({
             cart.data.forEach(element => {
                 cartQuantityArray.push(element.quantity);
             })
+            commit('IS_VIEW_LOADING', false)
             commit('GET_CART_ITEMS', cart.data)
             eventBus.$emit('cartLength', cartQuantityArray.reduce((a, b) => a + b, 0))
         })

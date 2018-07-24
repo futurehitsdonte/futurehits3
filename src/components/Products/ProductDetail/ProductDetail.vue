@@ -26,7 +26,6 @@
 
 <script>
     import moltin from '@/moltinConfig'
-    import {eventBus} from '@/main'
     import { mapState } from 'vuex'
     import SnackBar from '@/components/SnackBar/SnackBar.vue'
     export default {
@@ -69,6 +68,7 @@
                 moltin.Cart()
                     .AddProduct(item, this.itemsModel)
                     .then( (products) => {
+                        console.log(products)
                         this.snackVModel = true
                         this.text = this.singleProduct.name + ' has been added to cart!';
                         this.$store.dispatch('getCartItems')
