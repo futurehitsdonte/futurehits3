@@ -29,8 +29,7 @@
         name: "cartItem",
         props: {
             cartObj: {
-                default: null,
-                type: Object
+                default: null
             }
         },
         components: {

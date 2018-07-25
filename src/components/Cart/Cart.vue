@@ -1,7 +1,6 @@
 <template>
     <div>
-        <cartItem :cartObj="this.cartItemData"></cartitem>
-        
+        <cartItem :cartObj="cartItems"></cartitem>
     </div>
 </template>
 
@@ -21,6 +20,7 @@
         },
         created(){
             this.$store.dispatch('getCartItems')
+            this.$store.dispatch('getCartStoreLength')
             moltin
                 .Cart()
                 .Items()

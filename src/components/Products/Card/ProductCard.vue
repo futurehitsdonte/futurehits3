@@ -26,11 +26,8 @@
             }
         },
         created(){
-            setTimeout(()=> {
-                this.$store.dispatch('getProductData')
-                this.$store.dispatch('getCartItems')
-            }, 2000)
-            
+            this.$store.dispatch('getProductData')
+            this.$store.dispatch('getCartStoreLength')
         },
         computed: {
             ...mapState([

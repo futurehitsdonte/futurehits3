@@ -44,6 +44,9 @@ export default new Vuex.Store({
     },
     GET_SINGLE_PRODUCT_INCLUDED : (state, payload) => {
       state.singleProductIncluded = payload
+    },
+    GET_CART_STORE_LENGTH : (state, payload) => {
+      state.loading = payload
     }
   },
   actions: {
@@ -63,12 +66,18 @@ export default new Vuex.Store({
       moltin.Cart()
         .Items()
         .then(cart => {
+          commit('IS_VIEW_LOADING', false)
+          commit('GET_CART_ITEMS', cart)
+        })
+    },
+    getCartStoreLength (){
+      moltin.Cart()
+        .Items()
+        .then(cart => {
             const cartQuantityArray = [];
             cart.data.forEach(element => {
                 cartQuantityArray.push(element.quantity);
             })
-            commit('IS_VIEW_LOADING', false)
-            commit('GET_CART_ITEMS', cart.data)
             eventBus.$emit('cartLength', cartQuantityArray.reduce((a, b) => a + b, 0))
         })
     },

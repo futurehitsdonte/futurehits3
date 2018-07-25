@@ -8,13 +8,19 @@
         </v-container>
       </v-content>
     </div>
-    <div v-if="loading" id="loading"></div>
+    <div v-if="getLoadingState" id="loading">
+      <v-progress-circular
+      :size="200"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>
+    </div>
   </v-app>
 </template>
 
 <script>
 import NavBar from '@/components/Navbar/NavBar'
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
   export default {
     name: 'app',
     components: {
@@ -23,7 +29,11 @@ import {mapState} from 'vuex'
     computed:{
       ...mapState([
         'loading'
+      ]),
+      ...mapGetters([
+        'getLoadingState'
       ])
+
     }
   }
 </script>

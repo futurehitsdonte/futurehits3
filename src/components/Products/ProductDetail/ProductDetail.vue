@@ -51,7 +51,7 @@
             }
         },
         created(){
-            this.$store.dispatch('getCartItems')
+            this.$store.dispatch('getCartStoreLength')
             this.$store.dispatch('getSingleProduct', this.$route.params.productID)
             this.$store.state.productID = this.$route.params.productID,
             this.singleProductData = this.singleProduct;
