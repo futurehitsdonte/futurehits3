@@ -39,7 +39,7 @@
                             </v-flex>
                             <v-flex xs12 sm6 md3>
                                 <v-text-field
-                                v-model="phoneNumber"
+                                v-model="shipping_address.phone_number"
                                 label="Phone Number"
                                 :rules="phoneNumberRules"
                                 required>
@@ -93,7 +93,7 @@
                             </v-flex>
                             <v-flex xs12 sm6 md3>
                                 <v-text-field
-                                    v-model="billing_address.city"
+                                    v-model="shipping_address.city"
                                     label="City"
                                     :rules="GenericRules"
                                     required>
@@ -119,26 +119,45 @@
             <v-btn flat @click="e6 = 1">GO BACK</v-btn>
             </v-stepper-content>
 
-            <v-stepper-step :complete="e6 > 3" step="3">Payment Method</v-stepper-step>
+            <v-stepper-step :complete="e6 > 3" step="3">Review Your Order</v-stepper-step>
 
             <v-stepper-content step="3">
-            <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-            <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
+            <v-card color="grey lighten-1" class="mb-5" height="200px">
+                
+            </v-card>
+            <v-btn color="primary"  @click="e6 = 4" >Continue</v-btn>
             <v-btn flat>Cancel</v-btn>
             </v-stepper-content>
 
-            <v-stepper-step step="4">Review Your Order</v-stepper-step>
+            <v-stepper-step step="4">Payment Method</v-stepper-step>
             <v-stepper-content step="4">
-            <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-            <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
+            <v-card color="grey lighten-1" class="mb-5" height="200px">
+                <div ref="card"></div>
+            </v-card>
+            <v-btn color="primary" @click="purchase()">Purchase</v-btn>
             <v-btn flat>Cancel</v-btn>
             </v-stepper-content>
-            {{this.email}}
         </v-stepper>
         
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
+    elements = stripe.elements(),
+    card = null,
+    style = {
+    base: {
+    // Add your base input styles here. For example:
+    fontSize: '16px',
+    color: "#32325d",
+    },
+    invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+    }
+    };
+
     export default {
         name: 'Checkout',
         data(){
@@ -151,26 +170,7 @@
                 checkIfBillingIsShipping: true,
                 step1Form: false,
                 step2Form: false,
-                nameRules: [
-                    v => !!v || 'Name is required',
-                    v => (v && v.length >= 2) || 'Name must be greater than 2 characters'
-                ],
-                phoneNumberRules: [
-                    v => !!v || 'Phone Number is required',
-                    v => (v && v.length >= 10) || 'Phone Number must include area code.'
-                ],
-                emailRules: [
-                    v => !!v || 'E-mail is required',
-                    v => /.+@.+/.test(v) || 'E-mail must be valid'
-                ],
-                GenericRules: [
-                    v => !!v || 'Address is required',
-                    v => (v && v.length >= 2)  || 'Address must be valid'
-                ],
-                PostalRules:[
-                    v => !!v || 'Postal Code is required',
-                    v => (v && v.length === 5)  || 'Postal Code must be valid'
-                ],
+                tokenTemplate: null,
                 customer: {
                     name: this.fullName,
                     email: this.email
@@ -197,7 +197,71 @@
                     postcode: "",
                     county: "",
                     country: ""
+                },
+                nameRules: [
+                    v => !!v || 'Name is required',
+                    v => (v && v.length >= 2) || 'Name must be greater than 2 characters'
+                ],
+                phoneNumberRules: [
+                    v => !!v || 'Phone Number is required',
+                    v => (v && v.length >= 10) || 'Phone Number must include area code.'
+                ],
+                emailRules: [
+                    v => !!v || 'E-mail is required',
+                    v => /.+@.+/.test(v) || 'E-mail must be valid'
+                ],
+                GenericRules: [
+                    v => !!v || 'Address is required',
+                    v => (v && v.length >= 2)  || 'Address must be valid'
+                ],
+                PostalRules:[
+                    v => !!v || 'Postal Code is required',
+                    v => (v && v.length === 5)  || 'Postal Code must be valid'
+                ]
+                
+            }
+        },
+        mounted(){
+            card = elements.create('card', {style});
+            card.mount(this.$refs.card);
+        },
+        methods:{
+            
+            purchase(){
+                let concatUserInfo = {}
+                this.customer = {
+                    email: this.email,
+                    name: this.fullName
                 }
+                concatUserInfo = {
+                    customer: this.customer,
+                    address: this.shipping_address
+                }
+                this.shipping_address.first_name = this.firstName
+                this.shipping_address.last_name = this.lastName
+                stripe.createToken(card).then( result => {
+                    let userCheckout;
+                    this.tokenTemplate = {
+                        gateway: 'stripe',
+                        method: 'purchase',
+                        payment: result.token.id
+                    }
+                    
+                    this.$store.dispatch('checkoutCustomer', concatUserInfo).then(() => {
+                        setTimeout( () => {
+                            userCheckout = {
+                                tokenTemplate: this.tokenTemplate,
+                                orderId: this.customerPurchaseInfo.id
+                            }
+                            this.$store.dispatch('payForOrder', userCheckout);
+                        },1000)
+                        
+                    })
+                        
+                        
+                });
+                
+                
             }
         },
         created(){
@@ -205,6 +269,13 @@
             this.$store.dispatch('getCartStoreLength')
         },
         computed:{
+            ...mapActions([
+                'payForOrder',
+                'checkoutCustomer'
+            ]),
+            ...mapState([
+                'customerPurchaseInfo'
+            ]),
             fullName(){
                 return `${this.firstName} ${this.lastName}`;
             }

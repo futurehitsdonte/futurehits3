@@ -13,7 +13,9 @@ export default new Vuex.Store({
     cartItems: null,
     singleProduct: null,
     singleProductIncluded: null,
-    loading: true
+    successfulTransAction: false,
+    loading: true,
+    customerPurchaseInfo: null
   },
   getters :{
     getProductRouteID : state => {
@@ -47,6 +49,12 @@ export default new Vuex.Store({
     },
     GET_CART_STORE_LENGTH : (state, payload) => {
       state.loading = payload
+    },
+    CUSTOMER_PURCHASE_INFO : (state, payload) => {
+      state.customerPurchaseInfo = payload
+    },
+    SUCCESSFUL_PAYMENT : (state, payload) => {
+      state.successfulTransAction = payload
     }
   },
   actions: {
@@ -92,6 +100,25 @@ export default new Vuex.Store({
                 commit('GET_SINGLE_PRODUCT_INCLUDED', product.included)
                 commit('GET_SINGLE_PRODUCT', product.data)
             })
+    },
+    checkoutCustomer({commit}, payload){
+      moltin.Cart()
+        .Checkout(payload.customer, payload.address)
+        .then( results =>{
+          commit('CUSTOMER_PURCHASE_INFO', results.data)
+        })
+    },
+    payForOrder({commit},payload){
+      
+      moltin.Orders
+        .Payment(payload.orderId, payload.tokenTemplate)
+          .then(() => {
+            // Do something
+            commit('SUCCESSFUL_PAYMENT', true)
+          })
+          .catch(() => {
+            commit('SUCCESSFUL_PAYMENT', false)
+          })
     }
   }
 })
