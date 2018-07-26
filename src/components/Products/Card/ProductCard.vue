@@ -1,12 +1,28 @@
 <template>
-    <div>
-        <ul class="productUL">
-            <li v-for="(product, key) in productsCardMeta" :key="key" class="productCard" @click="goToProduct(product.id)">
-                <p>{{ product.name }}</p>
-                <img :src="productsCardImage[key].link.href" />
-            </li>
-        </ul>
-    </div>
+    <v-container>
+        <v-layout row wrap>
+            <!-- <h2 class="d-block font-weight-black display-3 width100" md12>Oils</h2> -->
+            <v-flex xs12 sm4 md3 lg2 
+                v-for="(product, key) in productsCardMeta" 
+                :key="key" 
+                class="productCard elevation-2 ma-0" 
+                @click="goToProduct(product.id)"
+                v-if="product.meta.stock.level > 0">
+            <v-card hover>
+                <v-card-media
+                    :src="productsCardImage[key].link.href"
+                    height="200px"
+                    ></v-card-media>
+                <v-card-title primary-title class="grey lighten-4">
+                    <div class="width100 ">
+                        <h3 class="headline text-xs-left font-weight-bold black---text">{{product.name}}</h3>
+                        <p class="body-2 text-xs-left grey--text">{{ product.meta.display_price.without_tax.formatted }}</p>
+                    </div>
+                </v-card-title>
+            </v-card>     
+            </v-flex> 
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -41,26 +57,10 @@
 </script>
 
 <style scoped>
-    .productUL{
-        list-style: none;
+    .width100{
+        width: 100%;
     }
-    .productCard{
-        border: 1px solid #eee;
-        width: 33.33%;
-        padding: 10px;
-        float: left;
-    }
-    .productCard > p{
-        text-align: center;
-    }
-    .productCard > img{
-        display: block;
-        margin: 0 auto;
-        width: 41%;
-    }
-    input[type="number"]{
-        width: 40%;
-        border: 2px solid #eee;
-        margin-bottom: 10px;
+    p{
+        margin-bottom: 0 !important;
     }
 </style>

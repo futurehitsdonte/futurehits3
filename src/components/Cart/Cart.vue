@@ -21,12 +21,6 @@
         created(){
             this.$store.dispatch('getCartItems')
             this.$store.dispatch('getCartStoreLength')
-            moltin
-                .Cart()
-                .Items()
-                .then( cart => {
-                    return this.cartItemData = cart;
-                })
         },
         computed: {
             ...mapState([

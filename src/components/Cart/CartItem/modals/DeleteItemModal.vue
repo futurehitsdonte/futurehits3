@@ -52,6 +52,7 @@
                     .RemoveItem(id, quantity)
                     .then( data => {
                         this.$emit('productItemsData', data);
+                        this.$store.dispatch('getCartStoreLength')
                         this.dialog = false;
                     })
             }

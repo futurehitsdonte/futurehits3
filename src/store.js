@@ -61,9 +61,10 @@ export default new Vuex.Store({
     getProductData ({commit}){
       commit('IS_VIEW_LOADING', true)
       moltin.Products
-        .With('main_image')
+        .With(['main_image','collections'])
         .All()
         .then( products => {
+          console.log(products.data)
             commit('IS_VIEW_LOADING', false)
             commit('GET_PRODUCT_CARDS_META', products.data)
             commit('GET_PRODUCT_CARDS_IMAGE', products.included.main_images)
@@ -115,6 +116,12 @@ export default new Vuex.Store({
           .then(() => {
             // Do something
             commit('SUCCESSFUL_PAYMENT', true)
+            moltin
+            .Cart()
+            .Delete()
+            .then( () => {
+              alert('cart deleted')
+            })
           })
           .catch(() => {
             commit('SUCCESSFUL_PAYMENT', false)

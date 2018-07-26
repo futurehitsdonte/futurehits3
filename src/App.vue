@@ -9,11 +9,13 @@
       </v-content>
     </div>
     <div v-if="getLoadingState" id="loading">
-      <v-progress-circular
-      :size="200"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
+      <v-progress-linear :indeterminate="true" color="green darken-4"></v-progress-linear>
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+            <img src="./assets/future-hits-logo-green.png" alt="" id="imgNoData">
+        </v-layout>
+      </v-container>
+      
     </div>
   </v-app>
 </template>
@@ -54,4 +56,11 @@ import {mapState, mapGetters} from 'vuex'
   z-index:10;
   background: rgba(255,255,255,1);
 }
+#imgNoData{
+        width: 20%;
+        display: block;
+    }
+    .v-progress-linear{
+      margin: 0;
+    }
 </style>

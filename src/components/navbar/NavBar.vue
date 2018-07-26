@@ -11,16 +11,15 @@
                 </v-list>
             </v-toolbar>
         </v-navigation-drawer>
-        <v-toolbar app fixed :clipped-left="clipped">
-            <v-toolbar-side-icon @click.stop="drawer =! drawer"></v-toolbar-side-icon>
+        <v-toolbar app fixed :clipped-left="clipped" class="green darken-4 white--text">
+            <v-toolbar-side-icon @click.stop="drawer =! drawer" class="hidden-sm-and-up white--text"></v-toolbar-side-icon>
             <v-toolbar-title>Future Hits 3</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-sm-and-down">
-                <v-btn flat ripple exact href="#/">Home</v-btn>
-                <v-btn flat ripple exact href="#/cart">
+            <v-toolbar-items class="hidden-sm-and-down ">
+                <v-btn flat ripple exact href="#/" class="white--text">Home</v-btn>
+                <v-btn flat ripple href="#/cart" class="white--text">
                     <v-badge overlap color="red darken-4">
                     <span slot="badge">{{cartLength || 0}}</span>
-
                     <v-avatar
                     >
                         <v-icon>shopping_cart</v-icon>

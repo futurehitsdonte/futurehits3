@@ -222,8 +222,16 @@ let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
             }
         },
         mounted(){
-            card = elements.create('card', {style});
+            
+            if(card == null){
+                console.log(card)
+                card = elements.create('card', {style});
+            }
             card.mount(this.$refs.card);
+            
+        },
+        beforeDestroy(){
+            card.unmount();
         },
         methods:{
             
@@ -253,7 +261,9 @@ let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
                                 tokenTemplate: this.tokenTemplate,
                                 orderId: this.customerPurchaseInfo.id
                             }
-                            this.$store.dispatch('payForOrder', userCheckout);
+                            this.$store.dispatch('payForOrder', userCheckout).then(() => {
+                                this.$store.dispatch('getCartStoreLength')
+                            });
                         },1000)
                         
                     })

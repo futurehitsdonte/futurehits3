@@ -16,8 +16,12 @@
             </div>
             
             <div v-if="resetCart.data.length === 0">
-                <img src="../../../assets/future-hits-logo-green.png" alt="" id="imgNoData">
-                <h1>No items found</h1>
+                <v-container fluid fill-height>
+                    <v-layout align-center justify-center>
+                        <img src="../../../assets/future-hits-logo-green.png" alt="" id="imgNoData">
+                    </v-layout>
+                </v-container>
+                
             </div>
         </div>
     </div>
@@ -37,7 +41,7 @@
         },
         data(){
             return{
-                cartData : this.cartObj,
+                cartData :  null,
                 cartMetaData : null,
                 itemQuantity: [
                     1,2,3,4,5,6,7,8,9,10
@@ -49,7 +53,7 @@
         },
         computed: {
             resetCart(){
-                console.log(this.cartData)
+                
                 if(this.cartData){
                     return this.cartData
                 }else{
