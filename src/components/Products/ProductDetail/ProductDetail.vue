@@ -19,7 +19,7 @@
                         :items="itemQuantity"
                         color="green darken-4"
                         v-model="itemsModel"></v-select>
-                    <v-btn color="success" block ripple hover round class="green darken-4 elevation-6" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart</v-btn>
+                    <v-btn color="success" block ripple round class="green darken-4" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart</v-btn>
                 </v-flex>
             </v-layout>
         </v-container>
