@@ -1,7 +1,7 @@
 <template>
     <div v-if="singleProduct">
         <v-container>
-            <h1 class="display-2 font-weight-black text-xs-center mb-4 black--text">{{singleProduct.name}}</h1>
+            <h1 class="display-2 font-weight-regular text-xs-center mb-4 black--text">{{singleProduct.name}} <span class=" font-italic">{{singleProduct.meta.display_price.without_tax.formatted}} <span v-if="!singleProduct.meta.stock.level > 0"> | Out of Stock</span></span></h1>
             <v-layout wrap>
                 
                 <v-flex xs12 sm12 md6 lg6 elevation-6 mb-4>
@@ -14,11 +14,12 @@
                     </v-carousel>
                 </v-flex>
                 <v-flex sm12 md6 lg6 pl-4>
-                    <h3 class="headline font-weight-medium font-italic red--text">Price: {{singleProduct.meta.display_price.without_tax.formatted}} <span v-if="!singleProduct.meta.stock.level > 0"> | Out of Stock</span> </h3>
+                    <h3 class="display-1 font-weight-light font-italic red--text"> </h3>
                     <v-select
                         :items="itemQuantity"
+                        color="green darken-4"
                         v-model="itemsModel"></v-select>
-                    <v-btn color="success" class="green darken-4" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart</v-btn>
+                    <v-btn color="success" block ripple hover round class="green darken-4 elevation-6" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart</v-btn>
                 </v-flex>
             </v-layout>
         </v-container>
