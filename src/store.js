@@ -64,10 +64,10 @@ export default new Vuex.Store({
         .With(['main_image','collections'])
         .All()
         .then( products => {
-          console.log(products.data)
+          console.log(products)
             commit('IS_VIEW_LOADING', false)
             commit('GET_PRODUCT_CARDS_META', products.data)
-            commit('GET_PRODUCT_CARDS_IMAGE', products.included.main_images)
+            commit('GET_PRODUCT_CARDS_IMAGE', products.included)
         })
     },
     getCartItems ({commit}){

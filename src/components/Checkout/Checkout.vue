@@ -119,19 +119,9 @@
             <v-btn flat @click="e6 = 1">GO BACK</v-btn>
             </v-stepper-content>
 
-            <v-stepper-step :complete="e6 > 3" step="3">Review Your Order</v-stepper-step>
-
+            <v-stepper-step step="3">Payment Method</v-stepper-step>
             <v-stepper-content step="3">
-            <v-card color="grey lighten-1" class="mb-5" height="200px">
-                
-            </v-card>
-            <v-btn color="primary"  @click="e6 = 4" >Continue</v-btn>
-            <v-btn flat>Cancel</v-btn>
-            </v-stepper-content>
-
-            <v-stepper-step step="4">Payment Method</v-stepper-step>
-            <v-stepper-content step="4">
-            <v-card color="grey lighten-1" class="mb-5" height="200px">
+            <v-card class="mb-5">
                 <div ref="card"></div>
             </v-card>
             <v-btn color="primary" @click="purchase()">Purchase</v-btn>
@@ -149,8 +139,12 @@ let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
     style = {
     base: {
     // Add your base input styles here. For example:
-    fontSize: '16px',
-    color: "#32325d",
+    iconColor: '#F99A52',
+      color: '#32315E',
+      lineHeight: '48px',
+      fontWeight: 400,
+      fontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", sans-serif',
+      fontSize: '15px',
     },
     invalid: {
         color: '#fa755a',

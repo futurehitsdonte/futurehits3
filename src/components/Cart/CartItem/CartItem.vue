@@ -3,15 +3,6 @@
         
         <div v-if="resetCart">
             <div v-if="resetCart.data.length > 0">
-                <!-- <ul>
-                    
-                    <li v-for="cart in resetCart.data" :key="cart.id">
-                        <h3>{{cart.name}}</h3> 
-                        <img :src="cart.image.href" :alt="cart.image.file_name">
-                        <v-text-field v-model="cart.quantity" type="number" :items="itemQuantity"></v-text-field>
-                        <DeleteItemModal :idOfItem="cart.id" :quantityOfItems="cart.quantity" :itemName="cart.name" @productItemsData="resetData($event)"/>
-                    </li>
-                </ul> -->
                 <v-data-table
                     :headers="headers"
                     :items="resetCart.data"
@@ -32,7 +23,11 @@
                         </td>
                     </template>
                 </v-data-table>
-                <v-btn href="#/checkout">Go to Checkout</v-btn>
+                <v-layout justify-end>
+                    <v-btn href="#/" outline large color="success">Contine Shopping</v-btn>
+                    <v-btn href="#/checkout" large color="green darken-4" dark>Go to Checkout <v-icon right dark>arrow_right_alt</v-icon></v-btn>
+                </v-layout>
+                
             </div>
             
             <div v-if="resetCart.data.length === 0">
@@ -100,6 +95,6 @@
 
 <style scoped>
     img{
-        width: 7%;
+        width: 10%;
     }
 </style>

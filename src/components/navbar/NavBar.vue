@@ -55,6 +55,9 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .v-badge--overlap .v-badge__badge{
+        top: -3px;
+        right: -6px;
+    }
 </style>
