@@ -3,11 +3,15 @@
     <div>
       <NavBar />
       <v-content>
-        <v-container fluid>
+        <v-container fluid class="container-padding-none" pa-0>
           <router-view class="view"/>
         </v-container>
       </v-content>
     </div>
+    <v-footer class="pa-3" color="gray darken-4" dark>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
     <div v-if="getLoadingState" id="loading">
       <v-progress-linear :indeterminate="true" color="green darken-4"></v-progress-linear>
       <v-container fluid fill-height>
@@ -63,4 +67,6 @@ import {mapState, mapGetters} from 'vuex'
     .v-progress-linear{
       margin: 0;
     }
+   
+    
 </style>

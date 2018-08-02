@@ -1,12 +1,12 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <v-flex xs12 sm4 md3 lg2 
+            <v-flex xs12 sm6 md4 lg4 mb-2
                 v-for="(product, key) in productsCardMeta" 
                 :key="key" 
                 class="productCard elevation-2 ma-0" 
                 @click="goToProduct(product.id)"
-                v-if="product.meta.stock.level > 0 && product.relationships.collections.data[0].id === productsCardImage.collections[0].id && product.status !== 'draft'">
+                v-if="product.status !== 'draft'">
                 
             <v-card hover>
                 <v-card-media
@@ -23,13 +23,13 @@
             </v-flex> 
         </v-layout>
 
-        <v-layout row wrap class="mt-3">
+        <!-- <v-layout row wrap class="mt-3">
             <v-flex xs12 sm4 md3 lg2 
                 v-for="(product, key) in productsCardMeta" 
                 :key="key" 
                 class="productCard elevation-2 ma-0" 
                 @click="goToProduct(product.id)"
-                v-if="product.meta.stock.level > 0 && product.relationships.collections.data[0].id === productsCardImage.collections[1].id && product.status !== 'draft'">
+                v-if="product.meta.stock.level > 0">
             <v-card hover>
                 <v-card-media
                     :src="productsCardImage.main_images[key].link.href"
@@ -43,7 +43,7 @@
                 </v-card-title>
             </v-card>     
             </v-flex> 
-        </v-layout>
+        </v-layout> -->
     </v-container>
 </template>
 
@@ -84,5 +84,13 @@
     }
     p{
         margin-bottom: 0 !important;
+    }
+    .container{
+      width: 64%;
+    }
+    @media only screen and (max-width: 665px) {
+      .container{
+        width: 100%;
+      }
     }
 </style>

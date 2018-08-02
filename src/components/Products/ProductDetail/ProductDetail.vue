@@ -1,11 +1,9 @@
 <template>
     <div v-if="singleProduct">
         <v-container>
-            <h1 class="display-2 font-weight-regular text-xs-center mb-4 black--text">{{singleProduct.name}} <span class=" font-italic">{{singleProduct.meta.display_price.without_tax.formatted}} <span v-if="!singleProduct.meta.stock.level > 0"> | Out of Stock</span></span></h1>
             <v-layout wrap>
-                
-                <v-flex xs12 sm12 md6 lg6 elevation-6 mb-4>
-                    <v-carousel light>
+                <v-flex xs12 sm12 md6 lg4 elevation-6 mb-4>
+                    <v-carousel light hide-delimiters>
                         <v-carousel-item
                         v-for="(item,i) in singleProductIncluded.files"
                         :key="i"
@@ -13,20 +11,40 @@
                         ></v-carousel-item>
                     </v-carousel>
                 </v-flex>
-                <v-flex sm12 md6 lg6 pl-4>
-                    <h3 class="display-1 font-weight-light font-italic red--text"> </h3>
+                <v-flex sm12 md6 lg8 pl-5 class="right-description">
+                    <h1 class="display-1 font-weight-bold mb-2 grey--text text--darken-4">{{singleProduct.name}} </h1>
+                    <span class="display-1 grey--text text--darken-1">{{singleProduct.meta.display_price.without_tax.formatted}} <span v-if="!singleProduct.meta.stock.level > 0"> | Out of Stock</span></span>
                     <v-select
                         :items="itemQuantity"
                         color="green darken-4"
                         v-model="itemsModel"></v-select>
-                    <v-btn color="success" large block ripple class="green darken-4" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart</v-btn>
+                    <!-- <v-select
+                    color="green darken-4"
+                    :items='singleProductIncluded.options'
+                    item-text="name"
+                    v-model="optionValue"></v-select> -->
+                    <v-btn color="success" large block ripple class="green darken-4" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart <v-icon right dark>add_shopping_cart</v-icon></v-btn>
+                    <v-flex xs-12 mt-4>
+                        <span class="body-2 grey--text">About This Item</span>
+                        <v-divider mb-2></v-divider>
+                        <div class="disclaimer mt-2 ">
+                            <p>
+                                This is our top selling women's oil. This oil can be used for any occassion.
+                            </p>
+                        </div>
+                    </v-flex>
+                    <v-flex xs-12 mt-4>
+                        <span class="body-2 red--text">Disclaimer</span>
+                        <v-divider mb-2 class="red"></v-divider>
+                        <div class="disclaimer mt-2 ">
+                            <p>
+                                Please make sure you/the person who is receiving the oil(s) is not allergic before buying or applying to your body. Future Hits 3 is not responible for any reactions/episodes that you/the person receiving the oil(s) might have.
+                            </p>
+                        </div>
+                    </v-flex>
                 </v-flex>
             </v-layout>
         </v-container>
-        
-        
-        
-
         <!-- <SnackBar :textSnackbar='snackBarText' :showSnackBar='showSnackBarBoolean'/> -->
         <v-snackbar 
             v-model="snackVModel" 
@@ -37,9 +55,8 @@
             color="green darken-4"> 
             {{text}}
             <v-btn
-                dark
-                @click="snackVModel = false"
-            >
+                flat
+                @click="snackVModel = false">
                 Close
             </v-btn>
         </v-snackbar>
@@ -62,6 +79,7 @@
                 itemQuantity: [
                     1,2,3,4,5,6,7,8,9,10
                 ],
+                optionValue: null,
                 snackBarText: 'Change this',
                 snackVModel: false,
                 snackbar: false,
@@ -77,9 +95,6 @@
             this.$store.dispatch('getSingleProduct', this.$route.params.productID)
             this.$store.state.productID = this.$route.params.productID,
             this.singleProductData = this.singleProduct;
-            setTimeout(() => {
-                console.log(this.singleProduct)
-            },100)
             
 
         },
@@ -95,17 +110,26 @@
                 moltin.Cart()
                     .AddProduct(item, this.itemsModel)
                     .then( (products) => {
+                        console.log(products)
                         this.snackVModel = true
                         this.text = this.singleProduct.name + ' has been added to cart!';
                         this.$store.dispatch('getCartStoreLength')
+                    })
+                    .catch((err) => {
+                        console.log(err)
                     })
             }
         }
     }
 </script>
 
-<style scoped>
+<style>
     .v-icon{
         color: #000;
     }
+    @media only screen and (max-width: 960px) {
+      .right-description{
+        padding-left: 0 !important; 
+      }
+    } 
 </style>

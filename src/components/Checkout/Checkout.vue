@@ -1,133 +1,157 @@
 <template>
-        <v-stepper v-model="e6" vertical>
-        <v-stepper-step :complete="e6 > 1" step="1">
-            Personal Infomation
-        </v-stepper-step>
+    <v-container>
+        <v-layout>
+            <v-stepper v-model="e6" vertical >
+                <v-stepper-step :complete="e6 > 1" step="1" color="green darken-4">
+                    Personal Infomation
+                </v-stepper-step>
 
-        <v-stepper-content step="1">
-            <v-card color="grey lighten-3" class="mb-5 pa-4 elevation-5">
-                
-                <v-form v-model="step1Form">
-                    <v-container>
-                        <v-layout row wrap>
-                            <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                v-model="firstName"
-                                label="First Name"
-                                :rules="nameRules"
-                                required>
-                                
-                                </v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                v-model="lastName"
-                                label="Last Name"
-                                :rules="nameRules"
-                                required>
-                                
-                                </v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                v-model="email"
-                                label="Email"
-                                :rules="emailRules"
-                                required>
-                                
-                                </v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                v-model="shipping_address.phone_number"
-                                label="Phone Number"
-                                :rules="phoneNumberRules"
-                                required>
-                                
-                                </v-text-field>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </v-form>
-            </v-card>
-            <v-btn color="primary" @click="e6 = 2" :disabled="!step1Form">Continue</v-btn>
-            </v-stepper-content>
+                <v-stepper-content step="1" color="green darken-4">
+                    <v-card color="grey lighten-3" class="mb-5 pa-4 elevation-5">
+                        
+                        <v-form v-model="step1Form">
+                            <v-container>
+                                <v-layout row wrap>
+                                    <v-flex xs12 sm6 md3>
+                                        <v-text-field
+                                        v-model="firstName"
+                                        label="First Name"
+                                        :rules="nameRules"
+                                        color="green darken-4"
+                                        required>
+                                        
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md3>
+                                        <v-text-field
+                                        v-model="lastName"
+                                        label="Last Name"
+                                        :rules="nameRules"
+                                        color="green darken-4"
+                                        required>
+                                        
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md3>
+                                        <v-text-field
+                                        v-model="email"
+                                        label="Email"
+                                        :rules="emailRules"
+                                        color="green darken-4"
+                                        required>
+                                        
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md3>
+                                        <v-text-field
+                                        v-model="shipping_address.phone_number"
+                                        label="Phone Number"
+                                        :rules="phoneNumberRules"
+                                        color="green darken-4"
+                                        required>
+                                        
+                                        </v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </v-form>
+                    </v-card>
+                    <v-btn color="green darken-4" @click="e6 = 2" dark :disabled="!step1Form">Continue</v-btn>
+                    </v-stepper-content>
 
-            <v-stepper-step :complete="e6 > 2" step="2">Shipping/Billing Address</v-stepper-step>
+                    <v-stepper-step :complete="e6 > 2" step="2" color="green darken-4">Shipping/Billing Address</v-stepper-step>
 
-            <v-stepper-content step="2">
-            <v-card color="grey lighten-3" class="mb-5 pa-4 elevation-5">
-                
-                <v-form v-model="step2Form">
-                    <v-container>
-                        <v-checkbox
-                            label="Same as billing address?"
-                            v-model="checkIfBillingIsShipping"
-                            ></v-checkbox>
-                        <v-layout row wrap>
-                            <v-flex xs12 sm6 md10>
-                                <v-text-field
-                                v-model="shipping_address.line_2"
-                                :rules="GenericRules"
-                                label="Address"
-                                required>
-                                
-                                </v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md2>
-                                <v-text-field
-                                    v-model="shipping_address.line_1"
-                                    label="APT#">
-                                
-                                </v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="shipping_address.county"
-                                    label="State"
-                                    :rules="GenericRules"
-                                    required>
-                                
-                                </v-text-field>
-                                
-                            </v-flex>
-                            <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="shipping_address.city"
-                                    label="City"
-                                    :rules="GenericRules"
-                                    required>
-                                
-                                </v-text-field>
-                                
-                            </v-flex>
-                            <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="shipping_address.postcode"
-                                    label="Postal Code"
-                                    :rules="PostalRules"
-                                    required>
-                                
-                                </v-text-field>
-                                
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </v-form>
-            </v-card>
-            <v-btn color="primary" @click="e6 = 3" :disabled="!step2Form">Continue</v-btn>
-            <v-btn flat @click="e6 = 1">GO BACK</v-btn>
-            </v-stepper-content>
+                    <v-stepper-content step="2">
+                    <v-card color="grey lighten-3" class="mb-5 pa-4 elevation-5">
+                        
+                        <v-form v-model="step2Form">
+                            <v-container>
+                                <v-checkbox
+                                    label="Same as billing address?"
+                                    v-model="checkIfBillingIsShipping"
+                                    color="green darken-4"
+                                    ></v-checkbox>
+                                <v-layout row wrap>
+                                    <v-flex xs12 sm6 md10>
+                                        <v-text-field
+                                        v-model="shipping_address.line_2"
+                                        :rules="GenericRules"
+                                        label="Address"
+                                        color="green darken-4"
+                                        required>
+                                        
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md2>
+                                        <v-text-field
+                                            v-model="shipping_address.line_1"
+                                            color="green darken-4"
+                                            label="APT#">
+                                        
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md3>
+                                        <v-text-field
+                                            v-model="shipping_address.county"
+                                            label="State"
+                                            :rules="GenericRules"
+                                            color="green darken-4"
+                                            required>
+                                        
+                                        </v-text-field>
+                                        
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md3>
+                                        <v-text-field
+                                            v-model="shipping_address.city"
+                                            label="City"
+                                            :rules="GenericRules"
+                                            color="green darken-4"
+                                            required>
+                                        
+                                        </v-text-field>
+                                        
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md3>
+                                        <v-text-field
+                                            v-model="shipping_address.postcode"
+                                            label="Postal Code"
+                                            :rules="PostalRules"
+                                            color="green darken-4"
+                                            required>
+                                        
+                                        </v-text-field>
+                                        
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </v-form>
+                    </v-card>
+                    <v-btn color="green darken-4" dark @click="e6 = 3" :disabled="!step2Form">Continue</v-btn>
+                    <v-btn flat @click="e6 = 1">GO BACK</v-btn>
+                    </v-stepper-content>
 
-            <v-stepper-step step="3">Payment Method</v-stepper-step>
-            <v-stepper-content step="3">
-            <v-card class="mb-5">
-                <div ref="card"></div>
-            </v-card>
-            <v-btn color="primary" @click="purchase()">Purchase</v-btn>
-            <v-btn flat>Cancel</v-btn>
-            </v-stepper-content>
-        </v-stepper>
+                    <v-stepper-step step="3" color="green darken-4">Payment Method</v-stepper-step>
+                    <v-stepper-content step="3">
+                    <v-card class="mb-5">
+                        <v-container>
+                            <v-layout align-center justify-center>
+                                <v-flex lg4>
+                                <div ref="card"></div>
+                            </v-flex>
+                            </v-layout>
+                            
+                        </v-container>
+                        
+                    </v-card>
+                    <v-btn color="green darken-4" dark @click="purchase()">Purchase</v-btn>
+                    <v-btn flat @click="e6 = 2">GO BACK</v-btn>
+                    </v-stepper-content>
+                </v-stepper>
+        </v-layout>
+        
+    </v-container>
+        
         
 </template>
 
@@ -138,12 +162,9 @@ let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
     card = null,
     style = {
     base: {
-    // Add your base input styles here. For example:
-    iconColor: '#F99A52',
+        iconColor: '#000',
       color: '#32315E',
-      lineHeight: '48px',
       fontWeight: 400,
-      fontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", sans-serif',
       fontSize: '15px',
     },
     invalid: {
@@ -218,7 +239,6 @@ let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
         mounted(){
             
             if(card == null){
-                console.log(card)
                 card = elements.create('card', {style});
             }
             card.mount(this.$refs.card);

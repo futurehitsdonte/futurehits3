@@ -69,6 +69,9 @@ export default new Vuex.Store({
             commit('GET_PRODUCT_CARDS_META', products.data)
             commit('GET_PRODUCT_CARDS_IMAGE', products.included)
         })
+        .catch( err => {
+          console.log(err)
+        })
     },
     getCartItems ({commit}){
       commit('IS_VIEW_LOADING', true)
@@ -94,7 +97,7 @@ export default new Vuex.Store({
       commit('IS_VIEW_LOADING', true)
       moltin
             .Products
-            .With(['main_image', 'files'])
+            .With(['files','variations'])
             .Get(payload)
             .then(product => {
                 commit('IS_VIEW_LOADING', false)

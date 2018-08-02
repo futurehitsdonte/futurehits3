@@ -12,10 +12,6 @@ export default {
 
     }
   },
-  created (){
-    // console.log(moltin );
-    
-  },
   props: {
     msg: String
   }
