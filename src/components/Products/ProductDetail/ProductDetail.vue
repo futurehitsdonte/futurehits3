@@ -25,11 +25,11 @@
                     v-model="optionValue"></v-select> -->
                     <v-btn color="success" large block ripple class="green darken-4" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart <v-icon right dark>add_shopping_cart</v-icon></v-btn>
                     <v-flex xs-12 mt-4>
-                        <span class="body-2 grey--text">About This Item</span>
+                        <span class="body-2 grey--text">Description</span>
                         <v-divider mb-2></v-divider>
                         <div class="disclaimer mt-2 ">
                             <p>
-                                This is our top selling women's oil. This oil can be used for any occassion.
+                                {{singleProduct.description}}
                             </p>
                         </div>
                     </v-flex>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="jumbotron">
-      <v-jumbotron color="green darken-3" dark>
+      <v-jumbotron color="green darken-3" dark >
         <v-container fill-height>
           <v-layout align-center>
             <v-flex text-xs-center>

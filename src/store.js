@@ -106,9 +106,11 @@ export default new Vuex.Store({
             })
     },
     checkoutCustomer({commit}, payload){
+      commit('IS_VIEW_LOADING', true)
       moltin.Cart()
         .Checkout(payload.customer, payload.address)
         .then( results =>{
+          commit('IS_VIEW_LOADING', false)
           commit('CUSTOMER_PURCHASE_INFO', results.data)
         })
     },

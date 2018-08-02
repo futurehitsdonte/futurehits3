@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container mt-5>
         <v-layout row wrap>
             <v-flex xs12 sm6 md4 lg4 mb-2
                 v-for="(product, key) in productsCardMeta" 

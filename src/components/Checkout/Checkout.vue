@@ -149,7 +149,20 @@
                     </v-stepper-content>
                 </v-stepper>
         </v-layout>
-        
+        <v-snackbar 
+            v-model="snackVModel" 
+            :bottom="y"
+            :right="x"
+            :multi-line="mode === 'multi-line'" 
+            :timeout="timeout"
+            color="green darken-4"> 
+            {{text}}
+            <v-btn
+                flat
+                @click="snackVModel = false">
+                Close
+            </v-btn>
+        </v-snackbar>
     </v-container>
         
         
@@ -157,7 +170,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
+let stripe = Stripe('pk_test_CoE1apoOTnWbaLvsXSN1TwxU'),
     elements = stripe.elements(),
     card = null,
     style = {
@@ -213,6 +226,14 @@ let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
                     county: "",
                     country: ""
                 },
+                snackBarText: 'Change this',
+                snackVModel: false,
+                snackbar: false,
+                y: 'bottom',
+                x: 'right',
+                mode: 'multi-line',
+                timeout: 4000,
+                text: 'Hello, I\'m a snackbar',
                 nameRules: [
                     v => !!v || 'Name is required',
                     v => (v && v.length >= 2) || 'Name must be greater than 2 characters'
@@ -262,28 +283,39 @@ let stripe = Stripe('pk_test_b4rUYNwOAyepL6J6v1v8oaMA'),
                 this.shipping_address.first_name = this.firstName
                 this.shipping_address.last_name = this.lastName
                 stripe.createToken(card).then( result => {
-                    let userCheckout;
-                    this.tokenTemplate = {
-                        gateway: 'stripe',
-                        method: 'purchase',
-                        payment: result.token.id
+                    
+                    if(result.token){
+                        console.log(result)
+                        let userCheckout;
+                        this.tokenTemplate = {
+                            gateway: 'stripe',
+                            method: 'purchase',
+                            payment: result.token.id
+                        }
+                        
+                        this.$store.dispatch('checkoutCustomer', concatUserInfo).then(() => {
+                            setTimeout( () => {
+                                userCheckout = {
+                                    tokenTemplate: this.tokenTemplate,
+                                    orderId: this.customerPurchaseInfo.id
+                                }
+                                this.snackVModel = true
+                                this.text = 'Success!';
+                                this.$store.dispatch('payForOrder', userCheckout).then(() => {
+                                    this.$store.dispatch('getCartStoreLength')
+                                });
+                            },1000)
+                            
+                        })
+                    }else if(result.error){
+                        this.snackVModel = true
+                        this.timeout = 10000
+                        this.text = result.error.message
                     }
                     
-                    this.$store.dispatch('checkoutCustomer', concatUserInfo).then(() => {
-                        setTimeout( () => {
-                            userCheckout = {
-                                tokenTemplate: this.tokenTemplate,
-                                orderId: this.customerPurchaseInfo.id
-                            }
-                            this.$store.dispatch('payForOrder', userCheckout).then(() => {
-                                this.$store.dispatch('getCartStoreLength')
-                            });
-                        },1000)
-                        
-                    })
                         
                         
-                });
+                })
                 
                 
             }
