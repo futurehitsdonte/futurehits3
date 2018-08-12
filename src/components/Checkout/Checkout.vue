@@ -170,7 +170,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-let stripe = Stripe('pk_test_CoE1apoOTnWbaLvsXSN1TwxU'),
+let stripe = Stripe('pk_live_bMtGs4vnryvnxiaCwFvbiMHU'),
     elements = stripe.elements(),
     card = null,
     style = {
@@ -285,7 +285,6 @@ let stripe = Stripe('pk_test_CoE1apoOTnWbaLvsXSN1TwxU'),
                 stripe.createToken(card).then( result => {
                     
                     if(result.token){
-                        console.log(result)
                         let userCheckout;
                         this.tokenTemplate = {
                             gateway: 'stripe',
@@ -303,6 +302,7 @@ let stripe = Stripe('pk_test_CoE1apoOTnWbaLvsXSN1TwxU'),
                                 this.text = 'Success!';
                                 this.$store.dispatch('payForOrder', userCheckout).then(() => {
                                     this.$store.dispatch('getCartStoreLength')
+                                    this.$router.push('/thankyou')
                                 });
                             },1000)
                             

@@ -2,7 +2,7 @@
     <div v-if="singleProduct">
         <v-container>
             <v-layout wrap>
-                <v-flex xs12 sm12 md6 lg4 elevation-6 mb-4>
+                <v-flex xs12 sm12 md6 lg4 mb-4>
                     <v-carousel light hide-delimiters>
                         <v-carousel-item
                         v-for="(item,i) in singleProductIncluded.files"
@@ -23,7 +23,8 @@
                     :items='singleProductIncluded.options'
                     item-text="name"
                     v-model="optionValue"></v-select> -->
-                    <v-btn color="success" large block ripple class="green darken-4" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart <v-icon right dark>add_shopping_cart</v-icon></v-btn>
+                    <v-btn color="success" large ripple class="green darken-4" @click="addProductToCart(singleProduct.id)" :disabled="!singleProduct.meta.stock.level > 0"> Add to Cart <v-icon right dark>add_shopping_cart</v-icon></v-btn>
+                    <v-btn href="#/" outline large color="success">Contine Shopping</v-btn>
                     <v-flex xs-12 mt-4>
                         <span class="body-2 grey--text">Description</span>
                         <v-divider mb-2></v-divider>
@@ -109,14 +110,14 @@
             addProductToCart(item){
                 moltin.Cart()
                     .AddProduct(item, this.itemsModel)
-                    .then( (products) => {
-                        console.log(products)
+                    .then( () => {
+                        // console.log(products)
                         this.snackVModel = true
                         this.text = this.singleProduct.name + ' has been added to cart!';
                         this.$store.dispatch('getCartStoreLength')
                     })
-                    .catch((err) => {
-                        console.log(err)
+                    .catch(() => {
+                        // console.log(err)
                     })
             }
         }

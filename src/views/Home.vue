@@ -30,7 +30,6 @@
 <script>
 // @ is an alias to /src
 import ProductCard from '@/components/Products/Card/ProductCard'
-import {mapState} from 'vuex'
 export default {
   name: 'home',
   components: {
@@ -40,13 +39,5 @@ export default {
 </script>
 
 <style >
-  /* .container.fluid{
-      width: 64%;
-    }
-    @media only screen and (max-width: 665px) {
-      .container.fluid{
-        width: 100%;
-      }
-    } */
 </style>
 

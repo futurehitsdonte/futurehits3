@@ -5,6 +5,8 @@ import About from './views/About.vue'
 import Cart from './components/Cart/Cart.vue'
 import ProductDetail from './components/Products/ProductDetail/ProductDetail.vue'
 import Checkout from '@/components/Checkout/Checkout.vue'
+import ThankYou from '@/components/ThankYou/ThankYou.vue'
+import PageNotFound from '@/components/PageNotFound/PageNotFound.vue'
 
 Vue.use(Router)
 
@@ -37,6 +39,16 @@ export default new Router({
       meta:{
         requiresCartItems: true
       }
+    },
+    {
+      path: '/thankyou',
+      name: 'ThankYou',
+      component: ThankYou
+    },
+    {
+      path: '*',
+      name: 'PageNotFound',
+      component: PageNotFound
     }
 
   ]

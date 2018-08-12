@@ -64,13 +64,13 @@ export default new Vuex.Store({
         .With(['main_image','collections'])
         .All()
         .then( products => {
-          console.log(products)
+          // console.log(products)
             commit('IS_VIEW_LOADING', false)
             commit('GET_PRODUCT_CARDS_META', products.data)
             commit('GET_PRODUCT_CARDS_IMAGE', products.included)
         })
-        .catch( err => {
-          console.log(err)
+        .catch( () => {
+          // console.log(err)
         })
     },
     getCartItems ({commit}){
@@ -125,7 +125,7 @@ export default new Vuex.Store({
             .Cart()
             .Delete()
             .then( () => {
-              alert('cart deleted')
+              
             })
           })
           .catch(() => {

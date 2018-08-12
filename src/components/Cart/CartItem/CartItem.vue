@@ -32,9 +32,24 @@
                 </div>
                 
                 <div v-if="resetCart.data.length === 0">
-                    <v-container fluid fill-height>
-                        <v-layout align-center justify-center>
-                            <img src="../../../assets/future-hits-logo-green.png" alt="" id="imgNoData">
+                    <v-container>
+                        <v-layout>
+                            <v-flex pt-3 pb-3 style="text-align: center">
+                                <h1 class="text-xs-center display-3">Your Cart is empty</h1>
+                                
+                                <p class="text-xs-center headline">Return back home to our products.</p>
+                                <v-btn
+                                    class="text-xs-center mb-4"
+                                    color="green darken-3"
+                                    dark
+                                    large
+                                    href="#/"
+                                >
+                                    GO HOME
+                                </v-btn>
+                                <img src="../../../assets/future-hits-logo-green.png" alt="FH emblem" class="fh3img">
+                                
+                            </v-flex>
                         </v-layout>
                     </v-container>
                     
@@ -99,5 +114,10 @@
 <style scoped>
     img{
         width: 10%;
+    }
+    .fh3img{
+        width: 50%;
+        display: block;
+        margin: 0 auto;
     }
 </style>
